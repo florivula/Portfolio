@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://florivula.github.io/Portfolio'),
+	metadataBase: new URL('https://florivula.com'),
 	title: 'Flori Vula – Full-Stack Developer | IoT & Cloud Systems',
 	description:
 		'Portfolio of Flori Vula, a full-stack developer focused on real-time platforms, IoT systems, and cloud-native applications. Explore smart lighting, water monitoring, and full-stack projects built with React, Node.js, and Docker.',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 		title: 'Flori Vula – Full-Stack Developer | IoT & Cloud Systems',
 		description:
 			'Real-time IoT platforms and full-stack applications by Flori Vula. Featuring smart city solutions using modern technologies like React, Node.js, Docker, and ChirpStack.',
-		url: 'https://florivula.github.io',
+		url: 'https://florivula.com',
 		siteName: 'Flori Vula – Portfolio',
 		images: [
 			{
