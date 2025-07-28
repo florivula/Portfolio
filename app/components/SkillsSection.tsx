@@ -35,7 +35,7 @@ export const SkillsSection = () => {
 								{ name: 'Docker & Compose', level: 88 },
 								{ name: 'Google Cloud (GCP)', level: 75 },
 								{ name: 'CI/CD (basic)', level: 75 },
-								{ name: 'ChirpStack Integration', level: 85 },
+								{ name: 'IoT Data Pipeline Integration', level: 85 },
 							],
 							icon: '🚀',
 							color: 'from-purple-400 to-purple-600',

@@ -5,23 +5,23 @@ export const ProjectsSection = () => {
 	return (
 		<section id="work" className="py-12 sm:py-20 px-4 bg-white scroll-mt-20">
 			<div className="max-w-6xl mx-auto">
-				<h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center text-gray-900">Featured Projects</h2>
+				<h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12 text-center text-gray-900">Professional Work</h2>
 				<div className="space-y-8 sm:space-y-12">
 					{[
 						{
 							title: 'Smart Water Monitoring Platform',
 							description:
-								'A full-stack IoT solution that collects and displays real-time water usage data from LoRaWAN sensors. Features secure device integration, interactive dashboards, and downlink control capabilities.',
+								'A full-stack IoT solution that collects and displays real-time water usage data from smart sensors. Features secure device integration, interactive dashboards, and downlink control capabilities.',
 							metrics: {
 								responseTime: 110,
 								uptime: 99.98,
 								deviceLatency: 250,
 							},
 							techDetails: [
-								'LoRaWAN integration via ChirpStack',
-								'React dashboard with real-time sensor updates',
-								'JWT-based multi-tenant auth system',
-								'PostgreSQL schema with Prisma ORM',
+								'Real-time sensor data visualization dashboard',
+								'Role-based access control with secure authentication',
+								'Multi-tenant architecture supporting separate client environments',
+								'Robust data modeling and reporting capabilities',
 							],
 							image: '/smart-water.jpg',
 						},
@@ -35,10 +35,10 @@ export const ProjectsSection = () => {
 								deviceLatency: 180,
 							},
 							techDetails: [
-								'Encoded downlinks using vendor-supplied payload encoder',
-								'Leaflet-based zone mapping and device control',
-								'Schedule builder with gRPC backend support',
-								'Energy savings analytics and usage reports',
+								'Dynamic zone-based lighting control with interactive maps',
+								'Custom schedule builder for automated lighting routines',
+								'Real-time device monitoring and control dashboard',
+								'Energy usage insights and efficiency reports',
 							],
 							image: '/smart-lighting.jpg',
 						},

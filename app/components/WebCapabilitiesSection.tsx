@@ -10,7 +10,7 @@ export const WebCapabilitiesSection = () => {
 						{
 							title: 'Real-Time IoT Communication',
 							icon: '📡',
-							features: ['gRPC & REST APIs', 'Downlink scheduling', 'ChirpStack integration'],
+							features: ['gRPC & REST APIs', 'Downlink scheduling', 'Remote device messaging'],
 						},
 						{
 							title: 'Full-Stack Web Architecture',
