@@ -33,7 +33,7 @@ export const HeroSection = () => {
 				<div className="text-center space-y-6">
 					{/* Name Section */}
 					<div className="relative inline-block px-4 sm:px-0">
-						<div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-50"></div>
+						<div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-400 to-orange-500 rounded-2xl blur-xl opacity-50"></div>
 						<h1 className="relative text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800 pb-2">
 							Flori Vula
 						</h1>
