@@ -33,8 +33,8 @@ export const HeroSection = () => {
 				<div className="text-center space-y-6">
 					{/* Name Section */}
 					<div className="relative inline-block px-4 sm:px-0">
-						<div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-400 to-orange-500 rounded-2xl blur-xl opacity-50"></div>
-						<h1 className="relative text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800 pb-2">
+						<div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-400 to-orange-500 rounded-2xl blur-xl opacity-50 dark:opacity-40"></div>
+						<h1 className="relative text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800 dark:from-gray-100 dark:to-gray-200 pb-2">
 							Flori Vula
 						</h1>
 					</div>
@@ -43,11 +43,11 @@ export const HeroSection = () => {
 					<div className="space-y-4 sm:space-y-6 mt-6 sm:mt-8">
 						<div className="flex flex-col items-center gap-4">
 							<div className="flex items-center gap-3">
-								<span className="h-[1px] w-8 sm:w-12 bg-blue-500"></span>
-								<h2 className="text-xl sm:text-2xl font-light tracking-wide text-blue-600">Full-Stack Developer, IoT & Cloud Systems</h2>
-								<span className="h-[1px] w-8 sm:w-12 bg-blue-500"></span>
+								<span className="h-[1px] w-8 sm:w-12 bg-blue-500 dark:bg-blue-400"></span>
+								<h2 className="text-xl sm:text-2xl font-light tracking-wide text-blue-600 dark:text-blue-400">Full-Stack Developer, IoT & Cloud Systems</h2>
+								<span className="h-[1px] w-8 sm:w-12 bg-blue-500 dark:bg-blue-400"></span>
 							</div>
-							<p className="text-base sm:text-lg text-gray-600 max-w-2xl px-4 sm:px-0">
+							<p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl px-4 sm:px-0">
 								Building scalable web platforms and IoT solutions with full-stack precision
 							</p>
 						</div>
@@ -60,7 +60,7 @@ export const HeroSection = () => {
 								<span
 									key={tech}
 									title={tech}
-									className="px-3 sm:px-4 py-1 sm:py-1.5 bg-gray-100 rounded-full text-sm font-medium text-gray-700 border border-gray-200 hover:border-blue-500/50 transition-colors"
+									className="px-3 sm:px-4 py-1 sm:py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-blue-500/50 dark:hover:border-blue-400/50 transition-colors"
 								>
 									{tech}
 								</span>
@@ -72,7 +72,7 @@ export const HeroSection = () => {
 					<div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-8 sm:mt-12 px-4 sm:px-0">
 						<a href="/Flori_Vula_Resume.pdf" target="_blank" rel="noopener noreferrer" className="group relative inline-flex items-center justify-center">
 							<div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur opacity-50 group-hover:opacity-75 transition"></div>
-							<span className="relative px-6 sm:px-8 py-3 bg-white rounded-full inline-flex items-center justify-center w-full sm:w-auto">
+							<span className="relative px-6 sm:px-8 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-full inline-flex items-center justify-center w-full sm:w-auto">
 								View My Resume
 								<svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -81,7 +81,7 @@ export const HeroSection = () => {
 						</a>
 						<a
 							href="#contact"
-							className="px-6 sm:px-8 py-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors border border-gray-200 hover:border-gray-300 text-center"
+							className="px-6 sm:px-8 py-3 bg-gray-100 dark:bg-gray-800 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 text-center"
 						>
 							Get in Touch
 						</a>
@@ -108,8 +108,8 @@ export const HeroSection = () => {
 
 			{/* Scroll Indicator */}
 			<div className="absolute bottom-8 inset-x-0 flex flex-col items-center animate-bounce">
-				<span className="text-gray-600 text-sm mb-2 text-center">Scroll to explore</span>
-				<svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<span className="text-gray-600 dark:text-gray-400 text-sm mb-2 text-center">Scroll to explore</span>
+				<svg className="w-6 h-6 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
 				</svg>
 			</div>
