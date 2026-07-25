@@ -1,30 +1,7 @@
 import { useRef } from 'react'
-import type { KeyboardEvent } from 'react'
+import type { CSSProperties, KeyboardEvent } from 'react'
+import { availableModes } from '../content/modes'
 import type { ReadingMode } from '../content/types'
-
-interface ModeDefinition {
-  id: ReadingMode
-  label: string
-  description: string
-}
-
-const modes: ModeDefinition[] = [
-  {
-    id: 'portrait',
-    label: 'Portrait',
-    description: "Claude's designed reading experience",
-  },
-  {
-    id: 'second-read',
-    label: 'Second read',
-    description: "Codex's annotations and friction",
-  },
-  {
-    id: 'raw-response',
-    label: 'Raw response',
-    description: 'The complete source with minimal formatting',
-  },
-]
 
 interface ModeSwitcherProps {
   activeMode: ReadingMode
@@ -50,16 +27,16 @@ export function ModeSwitcher({
     let nextIndex = index
 
     if (event.key === 'ArrowRight') {
-      nextIndex = (index + 1) % modes.length
+      nextIndex = (index + 1) % availableModes.length
     } else if (event.key === 'ArrowLeft') {
-      nextIndex = (index - 1 + modes.length) % modes.length
+      nextIndex = (index - 1 + availableModes.length) % availableModes.length
     } else if (event.key === 'Home') {
       nextIndex = 0
     } else if (event.key === 'End') {
-      nextIndex = modes.length - 1
+      nextIndex = availableModes.length - 1
     }
 
-    const nextMode = modes[nextIndex]
+    const nextMode = availableModes[nextIndex]
     onModeChange(nextMode.id)
     buttonRefs.current[nextIndex]?.focus()
   }
@@ -70,8 +47,9 @@ export function ModeSwitcher({
         aria-label="Reading mode"
         className="mode-switcher"
         role="tablist"
+        style={{ '--mode-count': availableModes.length } as CSSProperties}
       >
-        {modes.map((mode, index) => (
+        {availableModes.map((mode, index) => (
           <button
             aria-controls={`panel-${mode.id}`}
             aria-selected={activeMode === mode.id}
@@ -95,4 +73,3 @@ export function ModeSwitcher({
     </div>
   )
 }
-

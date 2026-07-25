@@ -1,6 +1,9 @@
-import { collectContentFailures } from './content-gate.mjs'
+import { collectContentFailures, collectOptionalGaps } from './content-gate.mjs'
 
-const failures = await collectContentFailures()
+const [failures, gaps] = await Promise.all([
+  collectContentFailures(),
+  collectOptionalGaps(),
+])
 
 if (failures.length > 0) {
   console.error('Content gate failed:')
@@ -9,3 +12,5 @@ if (failures.length > 0) {
 } else {
   console.log('Content gate passed.')
 }
+
+gaps.forEach((gap) => console.log(`note: ${gap}`))

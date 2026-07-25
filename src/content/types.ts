@@ -4,9 +4,16 @@ export type ReadingMode = 'portrait' | 'second-read' | 'raw-response'
 
 export type EvidenceKind = 'observed' | 'inferred' | 'unknown'
 
+export interface SourceCondition {
+  key: string
+  value: string
+}
+
 export interface SourceMaterial {
   status: SourceStatus
   capturedAt: string
+  model: string
+  conditions: SourceCondition[]
   originalPrompt: string
   rawResponse: string
 }
@@ -26,4 +33,3 @@ export interface SecondReadNote {
   claim: string
   note: string
 }
-

@@ -125,7 +125,7 @@ function RawResponse() {
   return (
     <div className="raw-response">
       <div className="raw-response__meta">
-        <span>Claude / unedited source</span>
+        <span>{sourceMaterial.model} / unedited source</span>
         <span>{sourceMaterial.capturedAt}</span>
       </div>
       <pre>{sourceMaterial.rawResponse}</pre>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ModeSwitcher } from './components/ModeSwitcher'
 import { PortraitReader } from './components/PortraitReader'
 import { SourceGate } from './components/SourceGate'
+import { availableModes } from './content/modes'
 import { sourceMaterial } from './content/source'
 import type { ReadingMode } from './content/types'
 import { useReveal } from './hooks/useReveal'
@@ -12,6 +13,12 @@ const externalLinks = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/florivula' },
   { label: 'Instagram', href: 'https://instagram.com/florivula' },
 ]
+
+const countWords = ['No', 'One', 'Two', 'Three']
+
+const hasSource =
+  sourceMaterial.status === 'verified-exact-source' &&
+  sourceMaterial.originalPrompt.trim().length > 0
 
 function MachineSeal() {
   return (
@@ -30,6 +37,8 @@ export default function App() {
   const [mode, setMode] = useState<ReadingMode>('portrait')
   useReveal()
 
+  const readingCount = countWords[availableModes.length] ?? 'Several'
+
   return (
     <main>
       <section aria-labelledby="page-title" className="cover">
@@ -41,7 +50,7 @@ export default function App() {
         <header className="cover__registry">
           <span>Machine portrait 001</span>
           <span>Flori Vula</span>
-          <span>Captured July 2026</span>
+          <span>Captured {sourceMaterial.capturedAt}</span>
         </header>
 
         <div className="cover__body">
@@ -82,14 +91,28 @@ export default function App() {
             <h2>The question that produced the portrait.</h2>
           </header>
 
-          {sourceMaterial.status === 'verified-exact-source' &&
-          sourceMaterial.originalPrompt.trim() ? (
-            <blockquote className="source-prompt">
-              {sourceMaterial.originalPrompt}
-            </blockquote>
-          ) : (
-            <SourceGate compact />
-          )}
+          <div className="source-body">
+            {hasSource ? (
+              <>
+                <blockquote className="source-prompt">
+                  {sourceMaterial.originalPrompt}
+                </blockquote>
+                <dl className="source-conditions">
+                  {sourceMaterial.conditions.map((condition) => (
+                    <div key={condition.key}>
+                      <dt>{condition.key}</dt>
+                      <dd>{condition.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="source-note">
+                  Typos included. The prompt is part of the exhibit.
+                </p>
+              </>
+            ) : (
+              <SourceGate compact />
+            )}
+          </div>
         </div>
       </section>
 
@@ -100,8 +123,8 @@ export default function App() {
             <span>Reading</span>
           </div>
           <div className="section-heading">
-            <p className="eyebrow">Claude’s portrait / Codex’s second read</p>
-            <h2>One source. Three ways to read it.</h2>
+            <p className="eyebrow">{sourceMaterial.model}, unedited</p>
+            <h2>One answer. {readingCount} ways to read it.</h2>
           </div>
         </header>
 
@@ -112,20 +135,20 @@ export default function App() {
       <section className="limit-section">
         <div className="section-rail">
           <span>03</span>
-          <span>Limit</span>
+          <span>Note</span>
         </div>
         <div className="limit-section__content reveal">
           <span aria-hidden="true" className="limit-mark">
             ∴
           </span>
           <div>
-            <p className="eyebrow">Where the portrait ends</p>
-            <h2>A pattern is not a person.</h2>
+            <p className="eyebrow">Why it reads like that</p>
+            <h2>Nothing was softened.</h2>
             <p>
-              Models can recognize what repeats in the work and conversations
-              available to them. They can describe that pattern with surprising
-              precision. They still cannot know the life outside the record, or
-              the person in full.
+              It would have been easy to cut the paragraph about work that gets
+              built well and then stopped, or the one about a launch drawing
+              eleven thousand views and being filed under a note that views are
+              not comprehension. They are the reason the rest is worth reading.
             </p>
           </div>
         </div>
@@ -152,7 +175,7 @@ export default function App() {
 
         <div className="human-footnote__meta">
           <span>Flori Vula / Prishtina</span>
-          <span>Machine portrait 001 / July 2026</span>
+          <span>Machine portrait 001 / {sourceMaterial.capturedAt}</span>
         </div>
       </footer>
     </main>

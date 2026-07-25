@@ -21,20 +21,38 @@ preview deployments. `vercel.json` pins the Vite build explicitly.
 
 ## The content rule — read before touching content
 
-The exact Claude prompt and response are the central artifact.
+The exact prompt and response are the central artifact.
 
-- **Never invent, complete, paraphrase, or "improve" them.** The page's premise is that
-  this is exactly what a machine said. Writing that content for the layout destroys the
-  only thing the page is.
+**The capture (25 July 2026).** The source is a real exchange: Flori's prompt, answered by
+**Claude Opus 5 running as Claude Code inside Airise's private company repository**, reading
+the internal files it had access to. That provenance is stated on the page in the source
+conditions strip, and it is the reason the page works. A chatbot handed a bio would be a
+weaker exhibit than the machine that does the work describing its operator.
+
+- **Never invent, complete, paraphrase, or "improve" the strings.** The page's premise is
+  that this is exactly what a machine said. Writing that content for the layout destroys
+  the only thing the page is.
+- **The prompt keeps its original casing and typos.** It is the exhibit, not a caption.
 - Exact strings live in `src/content/source.ts`. Layout annotations live separately in
-  `src/content/reading.ts` so the source is never edited to fit a design.
+  `src/content/reading.ts` so the source is never edited to fit a design. Dropping a
+  paragraph from the designed view or promoting one to a pull quote is a layout decision;
+  the raw response mode always shows every paragraph in order.
 - Redactions must stay visibly marked rather than silently applied.
 - `Codex's second read` is a distinct authorship claim. Do not write those annotations as
-  another model.
+  another model. `secondReadNotes` is empty for that reason, and the tab hides itself until
+  it is not.
+- **Two claims on the page depend on the response being unedited:** the `Editing` condition
+  ("None. Returned text, unchanged.") and section 03 ("Nothing was softened."). Edit the
+  response and both have to change or come out.
 
-`scripts/content-gate.mjs` defines "the source has been supplied". It backs both
-`npm run content:check` and `scripts/guard-publish.mjs`, which fails **production** builds
-while the gate is red so an empty portrait cannot reach the live domain. Previews still build.
+`scripts/content-gate.mjs` defines "the portrait has a real source" — status, prompt,
+response, mapped sections. It backs both `npm run content:check` and
+`scripts/guard-publish.mjs`, which fails **production** builds while the gate is red so an
+empty portrait cannot reach the live domain. Previews still build. Missing Codex notes are
+reported as a non-blocking note, not a failure: they make the page incomplete, not empty.
+
+The guard is currently **unwired** from `vercel.json` (it was removed to ship the shell on
+25 July 2026). Re-arming it is one line: `"buildCommand": "node scripts/guard-publish.mjs && npm run build"`.
 
 ## Commands
 
