@@ -409,27 +409,15 @@ pre {
   font-size: 0.95rem;
 }
 
-.section-heading .eyebrow {
-  color: var(--clay-dark);
-}
+/* 01 — the prompt.
+   A compact band, not an event. The reader is two screens from the portrait
+   already; the prompt introduces itself and does not need a heading above it. */
 
-.section-heading h2 {
-  max-width: 17ch;
-  margin-bottom: 0;
-  color: var(--ink);
-  font: 400 clamp(2.75rem, 5.2vw, 6.5rem)/0.94 var(--serif);
-  letter-spacing: -0.05em;
-  text-wrap: balance;
-}
-
-/* Prompt/source */
-
-.source-section {
+.source-band {
   display: grid;
   grid-template-columns: 5rem minmax(0, 1fr);
-  gap: clamp(2rem, 8vw, 9rem);
-  min-height: 88svh;
-  padding: clamp(5rem, 10vw, 10rem) max(1.5rem, calc((100vw - 100rem) / 2));
+  gap: clamp(1.75rem, 5vw, 5rem);
+  padding: clamp(3.25rem, 5.5vw, 5rem) max(1.5rem, calc((100vw - 84rem) / 2));
   color: var(--ink);
   background:
     linear-gradient(rgba(17, 16, 14, 0.055) 1px, transparent 1px),
@@ -437,26 +425,20 @@ pre {
   background-size: 100% 3.5rem;
 }
 
-.source-section__content {
-  display: grid;
-  align-items: start;
-  grid-template-columns: minmax(18rem, 0.58fr) minmax(22rem, 0.92fr);
-  gap: clamp(3rem, 8vw, 10rem);
-}
-
-.source-body {
+.source-band__content {
   min-width: 0;
+  max-width: 60rem;
 }
 
 .source-prompt {
   position: relative;
   margin: 0;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  padding: clamp(1.5rem, 2.6vw, 2.4rem) 0 clamp(1.6rem, 2.6vw, 2.2rem);
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--rule-dark);
   color: var(--ink);
   white-space: pre-wrap;
-  font: 400 clamp(1.3rem, 2vw, 2.15rem)/1.45 var(--serif);
+  font: 400 clamp(1.12rem, 1.6vw, 1.6rem)/1.5 var(--serif);
 }
 
 .source-prompt::before {
@@ -479,7 +461,7 @@ pre {
 }
 
 .source-conditions > div {
-  padding: 1.1rem 1.25rem 1.1rem 0;
+  padding: 0.9rem 1.25rem 0.9rem 0;
   border-top: 1px solid var(--rule-dark);
 }
 
@@ -500,7 +482,7 @@ pre {
 }
 
 .source-note {
-  margin: 1.5rem 0 0;
+  margin: 1.1rem 0 0;
   color: var(--graphite);
   font: 600 0.58rem/1.5 var(--mono);
   letter-spacing: 0.12em;
@@ -553,163 +535,225 @@ pre {
   padding: clamp(2rem, 4vw, 3rem);
 }
 
-/* Reader */
+/* 02 — the reading.
+   A thin dark strip instead of a full-height title block: it keeps the paper /
+   ink alternation that separates the prompt from the portrait, and states the
+   length up front so the reader can see what they are agreeing to. */
 
-.reader-section {
+.reading-section {
   color: var(--paper-bright);
   background: var(--ink);
 }
 
-.reader-section__header {
-  display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr);
-  gap: clamp(2rem, 8vw, 9rem);
-  padding: clamp(6rem, 10vw, 10rem) max(1.5rem, calc((100vw - 100rem) / 2));
+.reading-lede {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.85rem 3rem;
+  flex-wrap: wrap;
+  padding: clamp(1.6rem, 2.4vw, 2.35rem)
+    max(1.5rem, calc((100vw - 84rem) / 2));
   border-bottom: 1px solid var(--rule-light);
 }
 
-.reader-section__header .section-rail {
+.reading-lede .section-rail {
+  align-items: center;
+  flex-direction: row;
+  gap: 0.9rem;
   color: rgba(242, 236, 226, 0.44);
 }
 
-.reader-section__header .section-rail span:first-child,
-.reader-section__header .section-heading .eyebrow {
+.reading-lede .section-rail span:first-child {
   color: var(--clay);
 }
 
-.reader-section__header .section-heading h2 {
-  color: var(--paper-bright);
-}
-
-.mode-switcher-shell {
-  position: sticky;
-  z-index: 20;
-  top: 0;
-  padding: 0 max(1rem, calc((100vw - 100rem) / 2));
-  border-bottom: 1px solid var(--rule-light);
-  background: rgba(17, 16, 14, 0.96);
-  backdrop-filter: blur(14px);
-}
-
-.mode-switcher {
-  display: grid;
-  grid-template-columns: repeat(var(--mode-count, 3), 1fr);
-  width: 100%;
-  max-width: 100rem;
-  margin: 0 auto;
-}
-
-.mode-button {
-  position: relative;
+.reading-lede__meta {
   display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-height: 5.5rem;
-  padding: 1.25rem clamp(0.75rem, 2.5vw, 2rem);
-  border: 0;
-  border-right: 1px solid var(--rule-light);
-  color: rgba(242, 236, 226, 0.46);
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.mode-button:first-child {
-  border-left: 1px solid var(--rule-light);
-}
-
-.mode-button::after {
-  position: absolute;
-  right: -1px;
-  bottom: -1px;
-  left: -1px;
-  height: 2px;
-  content: "";
-  background: transparent;
-}
-
-.mode-button span {
-  font: 700 0.72rem/1.2 var(--mono);
-  letter-spacing: 0.12em;
+  gap: 0.6rem 1.5rem;
+  flex-wrap: wrap;
+  margin: 0;
+  color: rgba(242, 236, 226, 0.44);
+  font: 600 0.62rem/1.4 var(--mono);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.mode-button small {
-  font-size: 0.72rem;
-  line-height: 1.35;
-}
-
-.mode-button:hover {
+.reading-lede__meta span:first-child {
   color: var(--paper-bright);
 }
 
-.mode-button[aria-selected="true"] {
-  color: var(--paper-bright);
-  background: rgba(242, 236, 226, 0.04);
-}
-
-.mode-button[aria-selected="true"]::after {
-  background: var(--clay);
-}
-
-.reader-panel {
-  min-height: 60svh;
+.reading-panel {
   color: var(--ink);
   background: var(--paper);
-  outline-offset: -4px;
 }
 
-.reader-panel > .source-gate {
+.reading-panel > .source-gate {
   width: min(calc(100% - 3rem), 54rem);
   margin: 0 auto;
   padding-top: clamp(4rem, 8vw, 7rem);
   transform: translateY(clamp(4rem, 8vw, 7rem));
 }
 
-.designed-portrait {
-  width: min(100%, 100rem);
+/* One column, one continuous read. The measure is set by the column, not by a
+   rail beside it, so the text stops looking longer than it is. */
+
+.reading-flow {
+  width: min(100%, 46rem);
   margin: 0 auto;
-  padding: clamp(5rem, 9vw, 10rem) max(1.5rem, 5vw);
+  padding: clamp(3rem, 5vw, 4.5rem) 1.5rem clamp(3.25rem, 5.5vw, 5rem);
+}
+
+.reading-body {
+  margin-bottom: 1.15em;
+  white-space: pre-line;
+  font: 400 clamp(1.08rem, 1.35vw, 1.3rem)/1.66 var(--serif);
+}
+
+.reading-body.is-opening::first-letter {
+  float: left;
+  margin: 0.04em 0.1em 0 0;
+  color: var(--clay-dark);
+  font-size: 3.6em;
+  line-height: 0.78;
+}
+
+/* The response's own transition lines, doing the work eight invented headings
+   used to do — at a fraction of the scroll, and in the machine's words. */
+
+.reading-hinge {
+  max-width: 26ch;
+  margin: clamp(2.5rem, 4vw, 3.6rem) 0 clamp(1.4rem, 2vw, 1.9rem);
+  padding-top: clamp(1.4rem, 2vw, 1.9rem);
+  border-top: 1px solid var(--rule-dark);
+  color: var(--clay-dark);
+  font: 400 clamp(1.3rem, 1.9vw, 1.8rem)/1.24 var(--serif);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.reading-unit:first-child .reading-hinge {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.reading-quote {
+  margin: clamp(2.1rem, 3.4vw, 3rem) 0;
+  padding: 1.25rem 0 1.25rem clamp(1.15rem, 2.6vw, 2rem);
+  border-top: 1px solid var(--clay-dark);
+  border-bottom: 1px solid var(--rule-dark);
+  color: var(--clay-dark);
+  font: italic 400 clamp(1.4rem, 2.1vw, 2.05rem)/1.22 var(--serif);
+  letter-spacing: -0.025em;
+}
+
+/* Alternates: folded away under the reading rather than offered as a choice
+   before it. The list derives from `availableModes`, so a second model's
+   annotations appear here on their own once they exist. */
+
+.alternates {
+  width: min(100%, 46rem);
+  margin: 0 auto;
+  padding: 0 1.5rem clamp(3.25rem, 5.5vw, 5rem);
+}
+
+.alternates__note {
+  max-width: 40ch;
+  margin: 0 0 1.4rem;
+  color: var(--graphite);
+  font: 400 0.92rem/1.6 var(--serif);
+}
+
+.alternates__list {
+  border-top: 1px solid var(--rule-dark);
+}
+
+.alternate {
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.alternate h2 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.alternate__toggle {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.35rem 1rem;
+  width: 100%;
+  padding: 1.05rem 0;
+  border: 0;
+  color: var(--ink);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.alternate__label {
+  font: 700 0.67rem/1.3 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.alternate__description {
+  color: var(--graphite);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.alternate__sign {
+  color: var(--clay-dark);
+  font: 400 1.1rem/1 var(--mono);
+}
+
+.alternate__toggle:hover .alternate__label,
+.alternate__toggle:hover .alternate__description {
+  color: var(--clay-dark);
+}
+
+.alternate__panel {
+  padding-bottom: 1.5rem;
+}
+
+.alternate__panel .raw-response,
+.alternate__panel .reading-flow {
+  width: 100%;
+  padding: 0 0 1rem;
 }
 
 .second-read-intro {
-  display: grid;
-  grid-template-columns: 0.75fr 1.25fr;
-  column-gap: clamp(3rem, 8vw, 9rem);
-  padding-bottom: clamp(5rem, 9vw, 9rem);
+  padding: 0.5rem 0 1.75rem;
   border-bottom: 1px solid var(--rule-dark);
 }
 
 .second-read-intro .eyebrow {
-  grid-column: 1;
+  margin-bottom: 0.9rem;
   color: var(--moss-dark);
 }
 
 .second-read-intro h3 {
-  grid-column: 1;
-  max-width: 14ch;
-  margin-bottom: 0;
-  font: 400 clamp(2.5rem, 5vw, 5.5rem)/0.96 var(--serif);
-  letter-spacing: -0.05em;
+  max-width: 22ch;
+  margin-bottom: 1rem;
+  font: 400 clamp(1.55rem, 2.5vw, 2.15rem)/1.12 var(--serif);
+  letter-spacing: -0.03em;
 }
 
 .second-read-intro > p:not(.eyebrow) {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  max-width: 36rem;
-  margin-top: 2.7rem;
+  max-width: 42rem;
+  margin-bottom: 0;
   color: #4b4944;
-  font-size: clamp(1rem, 1.35vw, 1.18rem);
-  line-height: 1.75;
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .evidence-key {
   display: flex;
-  grid-column: 2;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .evidence-key__item,
@@ -733,95 +777,13 @@ pre {
   color: var(--graphite);
 }
 
-.portrait-section {
-  padding: clamp(5rem, 9vw, 10rem) 0;
-  border-bottom: 1px solid var(--rule-dark);
-}
-
-.portrait-section:last-child {
-  border-bottom: 0;
-}
-
-.portrait-section__header {
-  display: grid;
-  align-items: start;
-  grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1.1fr);
-  gap: 2rem;
-  margin-bottom: clamp(3rem, 6vw, 6rem);
-}
-
-.portrait-section__index {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  padding-top: 0.55rem;
-  color: var(--graphite);
-  font: 700 0.62rem/1 var(--mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.portrait-section__index span:first-child {
-  color: var(--clay-dark);
-}
-
-.portrait-section__index span:first-child::after {
-  display: inline-block;
-  width: 2.5rem;
-  height: 1px;
-  margin-left: 0.9rem;
-  content: "";
-  background: var(--rule-dark);
-  vertical-align: middle;
-}
-
-.portrait-section__header h3 {
-  max-width: 15ch;
-  margin-bottom: 0;
-  font: 400 clamp(2.75rem, 5.5vw, 6.25rem)/0.95 var(--serif);
-  letter-spacing: -0.055em;
-  text-wrap: balance;
-}
-
-.portrait-section__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 42rem);
-  justify-content: center;
-}
-
-.designed-portrait.has-notes .portrait-section__grid {
-  grid-template-columns: minmax(0, 42rem) minmax(15rem, 20rem);
-  gap: clamp(3rem, 8vw, 9rem);
-}
-
-.portrait-copy p {
-  margin-bottom: 1.6em;
-  white-space: pre-line;
-  font: 400 clamp(1.18rem, 1.65vw, 1.48rem)/1.72 var(--serif);
-}
-
-.portrait-copy p:first-child::first-letter {
-  float: left;
-  margin: 0.03em 0.12em 0 0;
-  color: var(--clay-dark);
-  font-size: 4.2em;
-  line-height: 0.77;
-}
-
-.portrait-copy blockquote {
-  margin: clamp(3rem, 7vw, 6rem) 0;
-  padding: 1.75rem 0 1.75rem clamp(1.5rem, 5vw, 4rem);
-  border-top: 1px solid var(--clay-dark);
-  border-bottom: 1px solid var(--rule-dark);
-  color: var(--clay-dark);
-  font: italic 400 clamp(1.65rem, 3vw, 3.2rem)/1.15 var(--serif);
-  letter-spacing: -0.025em;
-}
-
 .annotation-stack {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin: 1.4rem 0 2rem;
+  padding-left: clamp(1rem, 2.5vw, 1.75rem);
+  border-left: 1px solid var(--rule-dark);
 }
 
 .annotation {
@@ -900,9 +862,8 @@ pre {
 .limit-section {
   display: grid;
   grid-template-columns: 5rem minmax(0, 1fr);
-  gap: clamp(2rem, 8vw, 9rem);
-  min-height: 72svh;
-  padding: clamp(6rem, 10vw, 10rem) max(1.5rem, calc((100vw - 100rem) / 2));
+  gap: clamp(1.75rem, 5vw, 5rem);
+  padding: clamp(3.5rem, 6vw, 5.5rem) max(1.5rem, calc((100vw - 84rem) / 2));
   color: var(--ink);
   background: var(--moss);
 }
@@ -918,13 +879,13 @@ pre {
 .limit-section__content {
   display: grid;
   align-items: start;
-  grid-template-columns: minmax(9rem, 0.4fr) minmax(20rem, 1fr);
-  gap: clamp(2rem, 8vw, 8rem);
+  grid-template-columns: minmax(5rem, 0.22fr) minmax(20rem, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
 }
 
 .limit-mark {
   color: rgba(17, 16, 14, 0.72);
-  font: 400 clamp(7rem, 15vw, 15rem)/0.75 var(--serif);
+  font: 400 clamp(4rem, 7vw, 7rem)/0.75 var(--serif);
 }
 
 .limit-section .eyebrow {
@@ -932,10 +893,10 @@ pre {
 }
 
 .limit-section h2 {
-  max-width: 10ch;
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
-  font: 400 clamp(3.2rem, 6.5vw, 7.2rem)/0.9 var(--serif);
-  letter-spacing: -0.06em;
+  max-width: 12ch;
+  margin-bottom: clamp(1.25rem, 2.2vw, 2rem);
+  font: 400 clamp(2.4rem, 4.4vw, 4.6rem)/0.94 var(--serif);
+  letter-spacing: -0.05em;
 }
 
 .limit-section__content p:last-child {
@@ -950,8 +911,8 @@ pre {
 .human-footnote {
   position: relative;
   overflow: hidden;
-  min-height: 82svh;
-  padding: clamp(5rem, 9vw, 9rem) max(1.5rem, calc((100vw - 100rem) / 2)) 2rem;
+  padding: clamp(3.5rem, 6vw, 5.5rem) max(1.5rem, calc((100vw - 84rem) / 2))
+    2rem;
   color: var(--paper-bright);
   background:
     linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(242, 236, 226, 0.07) 50%, transparent calc(50% + 0.5px)),
@@ -971,9 +932,9 @@ pre {
 
 .human-footnote__statement {
   display: grid;
-  grid-template-columns: 0.35fr 1fr;
+  grid-template-columns: 0.28fr 1fr;
   gap: 2rem;
-  padding-bottom: clamp(5rem, 9vw, 9rem);
+  padding-bottom: clamp(3rem, 5vw, 4.5rem);
 }
 
 .human-footnote__statement .eyebrow {
@@ -981,10 +942,10 @@ pre {
 }
 
 .human-footnote__statement h2 {
-  max-width: 14ch;
+  max-width: 16ch;
   margin-bottom: 0;
-  font: 400 clamp(3rem, 7vw, 8rem)/0.9 var(--serif);
-  letter-spacing: -0.06em;
+  font: 400 clamp(2.5rem, 4.8vw, 5rem)/0.94 var(--serif);
+  letter-spacing: -0.05em;
 }
 
 .human-footnote__statement h2 em {

@@ -21,13 +21,13 @@ const allModes: ModeDefinition[] = [
   {
     id: 'raw-response',
     label: 'Raw response',
-    description: 'The complete text, unformatted',
+    description: 'The same text, unformatted',
   },
 ]
 
 /**
- * The second-read tab is a second model's authorship. It stays out of the page
- * until those annotations actually exist, rather than showing an empty tab.
+ * The second reading is a second model's authorship. It stays out of the page
+ * until those annotations actually exist, rather than offering an empty one.
  */
 export const availableModes: ModeDefinition[] = allModes.filter(
   (mode) => mode.id !== 'second-read' || secondReadNotes.length > 0,

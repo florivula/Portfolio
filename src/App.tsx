@@ -1,10 +1,7 @@
-import { useState } from 'react'
-import { ModeSwitcher } from './components/ModeSwitcher'
 import { PortraitReader } from './components/PortraitReader'
 import { SourceGate } from './components/SourceGate'
-import { availableModes } from './content/modes'
+import { countWords, estimateReadingMinutes } from './content/parse'
 import { sourceMaterial } from './content/source'
-import type { ReadingMode } from './content/types'
 import { useReveal } from './hooks/useReveal'
 
 const externalLinks = [
@@ -14,11 +11,12 @@ const externalLinks = [
   { label: 'Instagram', href: 'https://instagram.com/florivula' },
 ]
 
-const countWords = ['No', 'One', 'Two', 'Three']
-
 const hasSource =
   sourceMaterial.status === 'verified-exact-source' &&
   sourceMaterial.originalPrompt.trim().length > 0
+
+const responseWords = countWords(sourceMaterial.rawResponse)
+const responseMinutes = estimateReadingMinutes(sourceMaterial.rawResponse)
 
 function MachineSeal() {
   return (
@@ -34,10 +32,7 @@ function MachineSeal() {
 }
 
 export default function App() {
-  const [mode, setMode] = useState<ReadingMode>('portrait')
   useReveal()
-
-  const readingCount = countWords[availableModes.length] ?? 'Several'
 
   return (
     <main>
@@ -80,56 +75,51 @@ export default function App() {
         </footer>
       </section>
 
-      <section className="source-section" id="source">
+      <section className="source-band" id="source">
         <div className="section-rail">
           <span>01</span>
           <span>Source</span>
         </div>
-        <div className="source-section__content reveal">
-          <header className="section-heading">
-            <p className="eyebrow">The prompt</p>
-            <h2>The question that produced the portrait.</h2>
-          </header>
-
-          <div className="source-body">
-            {hasSource ? (
-              <>
-                <blockquote className="source-prompt">
-                  {sourceMaterial.originalPrompt}
-                </blockquote>
-                <dl className="source-conditions">
-                  {sourceMaterial.conditions.map((condition) => (
-                    <div key={condition.key}>
-                      <dt>{condition.key}</dt>
-                      <dd>{condition.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="source-note">
-                  Typos included. The prompt is part of the exhibit.
-                </p>
-              </>
-            ) : (
-              <SourceGate compact />
-            )}
-          </div>
+        <div className="source-band__content reveal">
+          {hasSource ? (
+            <>
+              <blockquote className="source-prompt">
+                {sourceMaterial.originalPrompt}
+              </blockquote>
+              <dl className="source-conditions">
+                {sourceMaterial.conditions.map((condition) => (
+                  <div key={condition.key}>
+                    <dt>{condition.key}</dt>
+                    <dd>{condition.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="source-note">
+                Typos included. The prompt is part of the exhibit.
+              </p>
+            </>
+          ) : (
+            <SourceGate compact />
+          )}
         </div>
       </section>
 
-      <section className="reader-section" id="portrait-reader">
-        <header className="reader-section__header">
+      <section className="reading-section" id="portrait-reader">
+        <header className="reading-lede">
           <div className="section-rail">
             <span>02</span>
             <span>Reading</span>
           </div>
-          <div className="section-heading">
-            <p className="eyebrow">{sourceMaterial.model}, unedited</p>
-            <h2>One answer. {readingCount} ways to read it.</h2>
-          </div>
+          <p className="reading-lede__meta">
+            <span>{sourceMaterial.model}, unedited</span>
+            <span>{responseWords} words</span>
+            <span>About {responseMinutes} minutes</span>
+          </p>
         </header>
 
-        <ModeSwitcher activeMode={mode} onModeChange={setMode} />
-        <PortraitReader mode={mode} />
+        <div className="reading-panel">
+          <PortraitReader />
+        </div>
       </section>
 
       <section className="limit-section">

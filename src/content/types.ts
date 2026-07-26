@@ -18,17 +18,19 @@ export interface SourceMaterial {
   rawResponse: string
 }
 
-export interface PortraitSection {
-  id: string
-  label: string
-  title: string
-  paragraphIndexes: number[]
-  pullQuote?: string
-}
+/**
+ * How a single paragraph of the response is set.
+ *
+ * A role only changes the typography. It can never reorder, drop or shorten a
+ * paragraph: the reading walks the response from the first paragraph to the
+ * last and renders all of them, whatever this map says. Anything unmapped is
+ * body copy.
+ */
+export type ParagraphRole = 'hinge' | 'quote'
 
 export interface SecondReadNote {
   id: string
-  sectionId: string
+  paragraphIndex: number
   kind: EvidenceKind
   claim: string
   note: string
