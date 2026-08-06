@@ -16,7 +16,7 @@ async function readContentFiles() {
  * rule cannot drift between them. Anything in here blocks a production build.
  */
 export async function collectContentFailures() {
-  const [sourceFile, readingFile] = await readContentFiles()
+  const [sourceFile] = await readContentFiles()
 
   const failures = []
 
@@ -24,19 +24,38 @@ export async function collectContentFailures() {
     failures.push('source status is not verified-exact-source')
   }
 
-  if (/originalPrompt:\s*(''|``)/.test(sourceFile)) {
+  const originalPrompt = extractTemplateLiteral(sourceFile, 'originalPrompt')
+  if (!originalPrompt?.trim()) {
     failures.push('the exact original prompt is empty')
   }
 
-  if (/rawResponse:\s*(''|``)/.test(sourceFile)) {
+  const rawResponse = extractTemplateLiteral(sourceFile, 'rawResponse')
+  if (!rawResponse?.trim()) {
     failures.push('the exact machine response is empty')
   }
 
-  if (/portraitSections:\s*PortraitSection\[\]\s*=\s*\[\s*\]/s.test(readingFile)) {
-    failures.push('portrait sections have not been mapped')
-  }
-
   return failures
+}
+
+/**
+ * Read one template-literal field from source.ts without executing that public
+ * content module. Handles escaped backticks, unlike the old empty-string regex.
+ */
+export function extractTemplateLiteral(source, field) {
+  const marker = `${field}:`
+  const markerIndex = source.indexOf(marker)
+  if (markerIndex < 0) return null
+
+  const start = source.indexOf('`', markerIndex + marker.length)
+  if (start < 0) return null
+
+  for (let i = start + 1; i < source.length; i++) {
+    if (source[i] !== '`') continue
+    let slashes = 0
+    for (let j = i - 1; j >= 0 && source[j] === '\\'; j--) slashes++
+    if (slashes % 2 === 0) return source.slice(start + 1, i)
+  }
+  return null
 }
 
 /**

@@ -45,14 +45,15 @@ weaker exhibit than the machine that does the work describing its operator.
   ("None. Returned text, unchanged.") and section 03 ("Nothing was softened."). Edit the
   response and both have to change or come out.
 
-`scripts/content-gate.mjs` defines "the portrait has a real source" — status, prompt,
-response, mapped sections. It backs both `npm run content:check` and
+`scripts/content-gate.mjs` defines "the portrait has a real source" — verified status plus a real,
+non-empty prompt and response. The designed reading no longer needs a section map: it loops over every
+response paragraph in source order, so completeness is structural. The gate backs both `npm run content:check` and
 `scripts/guard-publish.mjs`, which fails **production** builds while the gate is red so an
 empty portrait cannot reach the live domain. Previews still build. Missing Codex notes are
 reported as a non-blocking note, not a failure: they make the page incomplete, not empty.
 
-The guard is currently **unwired** from `vercel.json` (it was removed to ship the shell on
-25 July 2026). Re-arming it is one line: `"buildCommand": "node scripts/guard-publish.mjs && npm run build"`.
+The guard is wired into `vercel.json` again as of the 26 Jul desktop audit:
+`"buildCommand": "node scripts/guard-publish.mjs && npm run build"`.
 
 ## Commands
 

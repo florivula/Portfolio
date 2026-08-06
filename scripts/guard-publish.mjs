@@ -23,6 +23,5 @@ console.error('Publishing now would show "the machine’s answer has not been su
 console.error('where the portrait should be.')
 console.error('')
 console.error('To publish: paste the exact prompt and response into src/content/source.ts,')
-console.error("set status to 'verified-exact-source', map the sections in")
-console.error('src/content/reading.ts, then push again.')
+console.error("set status to 'verified-exact-source', then push again.")
 process.exit(1)
