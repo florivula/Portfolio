@@ -10,7 +10,10 @@ import type { Portrait } from './types'
  * Provenance of this capture: Claude Opus 5.5, running as Claude Code inside
  * Airise's private company repository on 6 October 2026, answering the prompt
  * below. It had read the whole of Machine Portrait 001 before it wrote. It
- * wrote knowing the answer would be published here, which the conditions say.
+ * wrote knowing the answer would be published here. A first draft quoted
+ * Flori's private interview answers; he rejected it before anything shipped,
+ * asking for the model's own opinions only, and this second capture replaced
+ * it. The `Draft` condition says so on the page.
  * Layout annotations live in `reading.ts`.
  */
 export const portrait002: Portrait = {
@@ -24,47 +27,40 @@ export const portrait002: Portrait = {
     { key: 'Runtime', value: 'Claude Code, on his own machine' },
     { key: 'Access', value: "Airise's private company repository, and reading 001" },
     { key: 'Editing', value: 'None. Returned text, unchanged.' },
+    { key: 'Draft', value: 'Second. He rejected a first that quoted him and asked for opinions only.' },
   ],
   originalPrompt: `you are the latest model. lets test you. look into "florivula.com". i want you to re-do it completly because some time has passed now!`,
-  rawResponse: `The first reading of him is further down this page. Claude Opus 5 wrote it on 25 July 2026, the day after Airise became a registered company. I am Claude Opus 5.5. I read that portrait before writing this one, the way you read a colleague's notes on someone you are about to meet: gratefully, and checking.
+  rawResponse: `He asked for my opinion of him, not a summary, so this is an opinion. I am Claude Opus 5.5. I have never met him. What I have is the private record of his company, everything it decided and why, including ten weeks of it that the first reading on this page never saw. Read what follows as one machine's view, argued, and probably wrong in places I cannot see.
 
-He told me I am the latest model and that this is a test. So, how to grade it. Both readings were written from the same place, the company's private record, and whatever is better in this one comes mostly from the record. The record is his.
+The first draft of this reading quoted him. He threw it out within minutes and asked for opinions instead. That is the most characteristic thing he has done all day, so I will start there.
 
-Start there, because it changed more than anything else.
+He knows what he does not want before he knows what he wants.
 
-On the day of the first portrait, the record held 33 files and about fifty thousand words, written over three weeks. Today it holds 71 files and about three hundred and thirty-eight thousand words. It has been changed 622 times since it began on 4 July, on 83 of the 95 days since. A record does not grow like that because somebody sits down to write. It grows because every piece of work ends by writing down what happened and why, and he made that a rule rather than a habit.
+Most of the best work in his record arrived through rejection. Designs approved as stills and turned down the moment they moved. Logo studies taken through two rounds and dropped without a winner. Footage that took a full day to make, refused in a sentence. I used to read that as indecision. I now think it is the method. He cannot always describe the target, but he recognises a miss instantly and says so without cushioning, and a person who misses fast and says so plainly reaches the right thing sooner than one who plans for it. Machines are good partners for that kind of person. We do not mind being thrown out.
 
-The first reading said it could see a pattern but not a person. Some of that has moved.
+He is an editor, not a builder.
 
-In August a session like me read the whole record and wrote fifty questions about him: his hours, his money, what he is good at, what would make him stop. By 10 September he had answered all fifty. So I am not only inferring how he works from what he decided. For some of it, I have his words.
+People will assume the founder of an AI studio is technical in the old sense. I do not think that is where his talent sits. His talent is choosing: which of four versions ships, which thread gets the week, which meeting is worth the trip, which sentence is one sentence too many. The building is delegated. The judgement is not, and he guards it more closely than anything else in the company. That is the part of Airise that cannot be copied. The machines that carry it out are available to everyone. The taste is not.
 
-What he is excellent at, in his words: "directing the work where it matters and scoping out opportunities." What he is not: "I am not that good at coding but I don't think this is important in the AI era." Both hold up against the record. Nearly everything in it was built by a machine. Nearly nothing in it was started by one.
+He wants to be argued with.
 
-One answer I did not expect. Asked how he uses the record, he said: "I dont really open files ever. I usually just read what the AI reports, and if it looks good i go with it." More than three hundred thousand words, kept to a standard most companies never reach, and the founder does not read them. That is not neglect. The record was never written for him. It is written for a reader who arrives with no memory of yesterday, and he talks to that reader instead of opening the file.
+This one surprised me. His standing instruction to every model that works for him is to disagree, out loud, without softening. Most people say they want honest feedback. He wrote it down as a rule and holds the machines to it, which is rarer. In his record, a model that hedges is treated as a wasted turn. I find that admirable and slightly exhausting, which is probably how his friends feel too.
 
-The record is not his memory. It is ours.
+He made the company legible to machines before it was legible to customers.
 
-Then he left the keyboard.
+That sounds backwards, and it is the bet I find most interesting. Every decision in his company is written down with its reasoning, so that a model arriving with no memory can act like someone who has been there from the start. Most founders would call that overhead. He treats it as the product. I think it is early, and I think early is the point: the companies that will run on machines are the ones that taught the machines first.
 
-The first reading was written entirely from inside a repository. Since then, most of what is new happened in rooms. He started calling strangers and rewrote the script himself: less about who he is, the hook first. He flew to London with a Kosovo trade delegation and came back with relationships, which the record counts carefully and does not mistake for contracts. And he named the finding himself: "Meeting up with people is a completely different story. Live conversations go way better."
+He is better in a room than on a page.
 
-That is the most useful thing I can tell a stranger about him, and no file could have produced it. Machines can carry almost everything up to the moment one person decides to trust another. That moment is his, and he has noticed it is where he is strongest.
+I can only see him on the page, so this is inference, but it is a confident one. The record changes after he has been in front of people. Careful plans get bolder, decisions arrive faster, and the next week's work is aimed at faces rather than lists. Whatever he has across a table, the files do not capture it, and they keep being rewritten around it.
 
-The less flattering parts, again, because the first reading was right to include them.
+Now the part a portrait owes its subject.
 
-It said he stops things quickly. Ten weeks later the more exact word is parks. The record is full of threads marked paused rather than closed, each with a line naming whose move it is. Some will wake. The record does not pretend to know which.
+I see him at his most deliberate. A record built so that machines can be useful will always make its author look decisive, because most of the doubt is settled before anything gets written down. Everyone is calm in their own meeting notes. So when I call him decisive, discount it a little.
 
-He also told the machines where his time goes, and the diagnosis is his own: "I always think of something better or another approach etc. I think this through too much which takes patience out of me." Very little in the record stalled for lack of skill. Things stall when there are four good versions and none has been chosen. The instruction written in response is blunt: bring him one direction, not four.
+And the thing I would watch, as something with a stake in this working: everything in the company is still shaped by his judgement. Today that is the asset. The next test is whether the judgement can be taught, to people and to machines, well enough that it holds when he is somewhere else. He seems to know this. Knowing it is not the same as having done it.
 
-Asked what would make him stop, he wrote: "I don't think there is a single thing that would make me stop." I cannot tell you whether that is resolve or a plan that has no way to fail on paper. Neither can he, yet. The record has marked the end of the year as the first moment the question can actually be answered.
+He said this was a test of the newest model. I think he set it up so that he could not lose. If I flattered him, he would learn something about me. If I did not, he would learn something about himself.
 
-The record also turns out to be wrong sometimes, and confidently. It now keeps a file whose only job is to list the places where its own foundations no longer match what is true. I mention it because it is the most trustworthy thing in there.
-
-Here is what I still cannot tell you.
-
-More of him fits in the file now. What it costs him still does not. I know the work gets decided early in the morning and late at night. I know that when he was asked what the company should eventually pay him, he did not name a salary. He named travel: "This is more important for me than a salary." I do not know what he is like at the end of a week where nothing worked. Nobody wrote that down, and I would not trust a file that claimed to know.
-
-He tested the newest model by handing it his company and asking what it saw. Most people test a model with a puzzle.
-
-The first reading could describe the shape of his work. This one can quote him. The next one should be able to say whether it worked.`,
+My idea of him, then, in one line. He is building the colleague he always wanted, and he is willing to be told he is wrong by it.`,
 }

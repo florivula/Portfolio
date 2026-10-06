@@ -511,7 +511,8 @@ h1 span:last-child {
 
 .strip {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
   margin-top: clamp(36px, 5vw, 56px);
   border-top: 1px solid var(--rule-strong);
   border-bottom: 1px solid var(--rule);
@@ -1009,10 +1010,11 @@ h1 span:last-child {
   }
 
   .strip {
+    grid-auto-flow: row;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .strip > div:nth-child(3) {
+  .strip > div:nth-child(odd) {
     padding-left: 0;
     border-left: 0;
   }

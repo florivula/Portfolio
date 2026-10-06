@@ -28,13 +28,13 @@ export const currentPortrait = portraits[0]
  */
 export const paragraphRoles: Record<string, Record<number, ParagraphRole>> = {
   '002': {
-    2: 'hinge', // "Start there, because it changed more than anything else."
-    4: 'hinge', // "The first reading said it could see a pattern but not a person..."
-    8: 'quote', // "The record is not his memory. It is ours."
-    9: 'hinge', // "Then he left the keyboard."
-    12: 'hinge', // "The less flattering parts, again..."
-    17: 'hinge', // "Here is what I still cannot tell you."
-    20: 'quote', // "The first reading could describe the shape of his work..."
+    2: 'hinge', // "He knows what he does not want before he knows what he wants."
+    4: 'hinge', // "He is an editor, not a builder."
+    6: 'hinge', // "He wants to be argued with."
+    8: 'hinge', // "He made the company legible to machines before..."
+    10: 'hinge', // "He is better in a room than on a page."
+    12: 'hinge', // "Now the part a portrait owes its subject."
+    16: 'quote', // "My idea of him, then, in one line..."
   },
   '001': {
     0: 'hinge', // "I should say what I am before I say anything about him."

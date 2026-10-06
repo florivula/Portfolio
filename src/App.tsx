@@ -62,9 +62,9 @@ function Cover() {
       <div className="cover__body">
         <div className="cover__copy">
           <p className="cover__preface">
-            <span>This is not my biography.</span> I asked the machines I work
-            with to describe the person on the other side. Ten weeks later, I
-            asked again.
+            <span>This is not his biography.</span> It is what the machines he
+            works with think of him, in their own words. Taken once in July,
+            retaken in October.
           </p>
           <h1 id="page-title">
             <span>Flori Vula,</span>
@@ -258,10 +258,10 @@ export default function App() {
 
       <footer className="footnote">
         <div className="footnote__statement">
-          <p className="label">Human footnote</p>
+          <p className="label">Footnote</p>
           <h2>
-            I didn&rsquo;t write either portrait.
-            <span>I chose to publish both.</span>
+            He didn&rsquo;t write either portrait.
+            <span>He chose to publish both.</span>
           </h2>
         </div>
 

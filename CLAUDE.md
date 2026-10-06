@@ -42,6 +42,11 @@ build.
   files and words at each capture). Nothing from inside it is ever published here.
 - Each reading's `Editing` condition ("None. Returned text, unchanged.") depends on the
   response being unedited. The "Nothing was softened" note belongs to 001 and sits with it.
+- **A reading is the machine's own opinion of him, never his words.** Flori's rule, 6 Oct
+  2026: a first draft of 002 quoted his private interview answers verbatim and he rejected
+  it ("that page to be YOU ... opinions only and interesting"). So: no quoting him, no
+  paraphrasing his private answers as fact, and page chrome speaks of him in the third
+  person. The prompt block is the one place his words appear, as the provenance exhibit.
 - 002 was written knowing it would be published, by a model that had read 001 and the
   brain. It names no clients, people or revenue, and nothing internal-only. Keep any future
   reading to the same standard: this repository and site are public.
