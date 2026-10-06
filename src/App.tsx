@@ -1,7 +1,12 @@
-import { PortraitReader } from './components/PortraitReader'
-import { SourceGate } from './components/SourceGate'
-import { countWords, estimateReadingMinutes } from './content/parse'
-import { sourceMaterial } from './content/source'
+import { useId, useRef, useState } from 'react'
+import { PlainText, ReadingFlow } from './components/PortraitReader'
+import { RecordInstrument } from './components/RecordInstrument'
+import { countWords, estimateReadingMinutes, splitResponseIntoParagraphs } from './content/parse'
+import { currentPortrait, portraits } from './content/reading'
+import { formatDate, isoToTime } from './content/dates'
+import { activeDays, snapshots } from './content/record'
+import type { Portrait } from './content/types'
+import { useReadingGauge } from './hooks/useReadingGauge'
 import { useReveal } from './hooks/useReveal'
 
 const externalLinks = [
@@ -11,23 +16,223 @@ const externalLinks = [
   { label: 'Instagram', href: 'https://instagram.com/florivula' },
 ]
 
-const hasSource =
-  sourceMaterial.status === 'verified-exact-source' &&
-  sourceMaterial.originalPrompt.trim().length > 0
+const earlier = portraits.slice(1)
+const numberFormat = new Intl.NumberFormat('en-GB')
 
-const responseWords = countWords(sourceMaterial.rawResponse)
-const responseMinutes = estimateReadingMinutes(sourceMaterial.rawResponse)
+function shortDate(iso: string) {
+  return formatDate(isoToTime(iso))
+}
 
-function MachineSeal() {
+function SectionRail({ number, label }: { number: string; label: string }) {
   return (
-    <div aria-hidden="true" className="machine-seal">
-      <span className="machine-seal__orbit machine-seal__orbit--outer" />
-      <span className="machine-seal__orbit machine-seal__orbit--inner" />
-      <span className="machine-seal__axis machine-seal__axis--horizontal" />
-      <span className="machine-seal__axis machine-seal__axis--vertical" />
-      <span className="machine-seal__core" />
-      <span className="machine-seal__label">M / 001</span>
+    <div className="rail">
+      <span className="rail__number">{number}</span>
+      <span className="rail__label">{label}</span>
     </div>
+  )
+}
+
+function SourceBlock({ portrait }: { portrait: Portrait }) {
+  return (
+    <div className="source">
+      <p className="label">The prompt, as typed</p>
+      <blockquote className="source__prompt">{portrait.originalPrompt}</blockquote>
+      <dl className="strip">
+        {portrait.conditions.map((condition) => (
+          <div key={condition.key}>
+            <dt>{condition.key}</dt>
+            <dd>{condition.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="source__note">Typos included. The prompt is part of the exhibit.</p>
+    </div>
+  )
+}
+
+function Cover() {
+  return (
+    <section aria-labelledby="page-title" className="cover">
+      <header className="cover__registry">
+        <span>Machine portrait {currentPortrait.id}</span>
+        <span className="cover__registry-name">Flori Vula</span>
+        <span>Captured {shortDate(currentPortrait.capturedOn)}</span>
+      </header>
+
+      <div className="cover__body">
+        <div className="cover__copy">
+          <p className="cover__preface">
+            <span>This is not my biography.</span> I asked the machines I work
+            with to describe the person on the other side. Ten weeks later, I
+            asked again.
+          </p>
+          <h1 id="page-title">
+            <span>Flori Vula,</span>
+            <em>according to</em>
+            <span>the machines</span>
+          </h1>
+        </div>
+
+        <ol aria-label="Readings" className="index">
+          {portraits.map((portrait, i) => (
+            <li className={i === 0 ? 'is-current' : ''} key={portrait.id}>
+              <a href={i === 0 ? '#reading' : `#reading-${portrait.id}`}>
+                <span className="index__id">{portrait.id}</span>
+                <span className="index__model">{portrait.model}</span>
+                <span className="index__date">{shortDate(portrait.capturedOn)}</span>
+                <span className="index__state">
+                  {i === 0 ? 'Current reading' : 'Kept below, unchanged'}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <RecordInstrument />
+
+      <footer className="cover__footer">
+        <a className="enter" href="#source">
+          <span>Enter the reading</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+        <p>A dated portrait, retaken when there is more to read.</p>
+      </footer>
+    </section>
+  )
+}
+
+function CurrentReading() {
+  const flowRef = useRef<HTMLDivElement>(null)
+  const { progress, active } = useReadingGauge(flowRef)
+  const total = splitResponseIntoParagraphs(currentPortrait.rawResponse).length
+  const words = countWords(currentPortrait.rawResponse)
+  const minutes = estimateReadingMinutes(currentPortrait.rawResponse)
+
+  return (
+    <section aria-label={`Reading ${currentPortrait.id}`} className="section section--reading" id="reading">
+      <aside className="gauge">
+        <SectionRail label="Reading" number="02" />
+        <p className="gauge__meta">
+          <span>{currentPortrait.model}, unedited</span>
+          <span>{numberFormat.format(words)} words</span>
+          <span>About {minutes} minutes</span>
+        </p>
+        <div aria-hidden="true" className="gauge__dial">
+          <span className="gauge__count">
+            ¶ {String(active + 1).padStart(2, '0')}
+            <span> / {String(total).padStart(2, '0')}</span>
+          </span>
+          <span className="gauge__track">
+            <span className="gauge__fill" style={{ transform: `scaleY(${progress})` }} />
+          </span>
+        </div>
+      </aside>
+
+      <div className="section__content" ref={flowRef}>
+        <ReadingFlow portrait={currentPortrait} />
+        <PlainText portrait={currentPortrait} />
+      </div>
+    </section>
+  )
+}
+
+function Between() {
+  const [then, now] = snapshots
+  const rows = [
+    { key: 'Files', a: then.files, b: now.files },
+    { key: 'Words', a: then.words, b: now.words },
+    { key: 'Changes', a: then.changes, b: now.changes },
+    { key: 'Days kept', a: then.days, b: now.days },
+  ]
+
+  return (
+    <section className="section section--between">
+      <SectionRail label="Between the readings" number="03" />
+      <div className="section__content">
+        <h2 className="between__title reveal">The record, measured at each capture.</h2>
+        <div className="readouts reveal">
+          <div className="readouts__head" aria-hidden="true">
+            <span />
+            <span>R / {then.portraitId}</span>
+            <span>R / {now.portraitId}</span>
+            <span>Change</span>
+          </div>
+          {rows.map((row) => (
+            <div className="readouts__row" key={row.key}>
+              <span className="readouts__key">{row.key}</span>
+              <span className="readouts__value readouts__value--then">
+                {numberFormat.format(row.a)}
+              </span>
+              <span className="readouts__value">{numberFormat.format(row.b)}</span>
+              <span className="readouts__ratio">×{(row.b / row.a).toFixed(1)}</span>
+            </div>
+          ))}
+        </div>
+        <p className="between__note reveal">
+          Counted from the history of Airise&rsquo;s private company repository
+          at the moment of each capture: Markdown files, their words, and every
+          recorded change. Counts only. Nothing from inside it is published
+          here. Of its {now.days} days, the record changed on {activeDays}.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+function ArchivedReading({ portrait }: { portrait: Portrait }) {
+  const [open, setOpen] = useState(false)
+  const panelId = useId()
+  const words = countWords(portrait.rawResponse)
+
+  return (
+    <section className="section section--archive" id={`reading-${portrait.id}`}>
+      <SectionRail label={`Reading ${portrait.id}`} number="04" />
+      <div className="section__content">
+        <div className="archive__head reveal">
+          <p className="strip strip--inline">
+            <span>{portrait.id}</span>
+            <span>{portrait.model}</span>
+            <span>{portrait.capturedAt}</span>
+            <span>{numberFormat.format(words)} words</span>
+          </p>
+          <h2>The first reading, kept whole.</h2>
+          <p>
+            Written from a record about a seventh of today&rsquo;s size, the
+            day after Airise was registered. Left exactly as it was published.
+          </p>
+          <button
+            aria-controls={panelId}
+            aria-expanded={open}
+            className="archive__toggle"
+            onClick={() => setOpen(!open)}
+            type="button"
+          >
+            <span>{open ? 'Close' : 'Open'} reading {portrait.id}</span>
+            <span aria-hidden="true">{open ? '−' : '+'}</span>
+          </button>
+        </div>
+
+        {open ? (
+          <div className="archive__panel" id={panelId}>
+            <SourceBlock portrait={portrait} />
+            <ReadingFlow portrait={portrait} />
+            <div className="archive__note">
+              <p className="label">Published with reading 001</p>
+              <h3>Nothing was softened.</h3>
+              <p>
+                It would have been easy to cut the paragraph about work that
+                gets built well and then stopped, or the one about a launch
+                drawing eleven thousand views and being filed under a note that
+                views are not comprehension. They are the reason the rest is
+                worth reading.
+              </p>
+            </div>
+            <PlainText portrait={portrait} />
+          </div>
+        ) : null}
+      </div>
+    </section>
   )
 }
 
@@ -36,124 +241,31 @@ export default function App() {
 
   return (
     <main>
-      <section aria-labelledby="page-title" className="cover">
-        <div className="frame frame--top" />
-        <div className="frame frame--right" />
-        <div className="frame frame--bottom" />
-        <div className="frame frame--left" />
+      <Cover />
 
-        <header className="cover__registry">
-          <span>Machine portrait 001</span>
-          <span>Flori Vula</span>
-          <span>Captured {sourceMaterial.capturedAt}</span>
-        </header>
-
-        <div className="cover__body">
-          <div className="cover__copy">
-            <p className="cover__preface">
-              <span>This is not my biography.</span>
-              I asked the machines I work with to describe the person on the
-              other side.
-            </p>
-            <h1 id="page-title">
-              Flori Vula,
-              <em>according to</em>
-              the machines
-            </h1>
-          </div>
-          <MachineSeal />
-        </div>
-
-        <footer className="cover__footer">
-          <a className="enter-link" href="#source">
-            <span>Enter the reading</span>
-            <span aria-hidden="true">↓</span>
-          </a>
-          <p>
-            A dated portrait assembled from the AI systems he works with.
-          </p>
-        </footer>
-      </section>
-
-      <section className="source-band" id="source">
-        <div className="section-rail">
-          <span>01</span>
-          <span>Source</span>
-        </div>
-        <div className="source-band__content reveal">
-          {hasSource ? (
-            <>
-              <blockquote className="source-prompt">
-                {sourceMaterial.originalPrompt}
-              </blockquote>
-              <dl className="source-conditions">
-                {sourceMaterial.conditions.map((condition) => (
-                  <div key={condition.key}>
-                    <dt>{condition.key}</dt>
-                    <dd>{condition.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="source-note">
-                Typos included. The prompt is part of the exhibit.
-              </p>
-            </>
-          ) : (
-            <SourceGate compact />
-          )}
+      <section className="section section--source" id="source">
+        <SectionRail label="Source" number="01" />
+        <div className="section__content reveal">
+          <SourceBlock portrait={currentPortrait} />
         </div>
       </section>
 
-      <section className="reading-section" id="portrait-reader">
-        <header className="reading-lede">
-          <div className="section-rail">
-            <span>02</span>
-            <span>Reading</span>
-          </div>
-          <p className="reading-lede__meta">
-            <span>{sourceMaterial.model}, unedited</span>
-            <span>{responseWords} words</span>
-            <span>About {responseMinutes} minutes</span>
-          </p>
-        </header>
+      <CurrentReading />
+      <Between />
+      {earlier.map((portrait) => (
+        <ArchivedReading key={portrait.id} portrait={portrait} />
+      ))}
 
-        <div className="reading-panel">
-          <PortraitReader />
-        </div>
-      </section>
-
-      <section className="limit-section">
-        <div className="section-rail">
-          <span>03</span>
-          <span>Note</span>
-        </div>
-        <div className="limit-section__content reveal">
-          <span aria-hidden="true" className="limit-mark">
-            ∴
-          </span>
-          <div>
-            <p className="eyebrow">Why it reads like that</p>
-            <h2>Nothing was softened.</h2>
-            <p>
-              It would have been easy to cut the paragraph about work that gets
-              built well and then stopped, or the one about a launch drawing
-              eleven thousand views and being filed under a note that views are
-              not comprehension. They are the reason the rest is worth reading.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <footer className="human-footnote">
-        <div className="human-footnote__statement">
-          <p className="eyebrow">Human footnote</p>
+      <footer className="footnote">
+        <div className="footnote__statement">
+          <p className="label">Human footnote</p>
           <h2>
-            I didn’t write the portrait.
-            <em>I chose to publish it.</em>
+            I didn&rsquo;t write either portrait.
+            <span>I chose to publish both.</span>
           </h2>
         </div>
 
-        <nav aria-label="External links" className="exit-links">
+        <nav aria-label="External links" className="exits">
           {externalLinks.map((link, index) => (
             <a href={link.href} key={link.label}>
               <span>{String(index + 1).padStart(2, '0')}</span>
@@ -163,9 +275,11 @@ export default function App() {
           ))}
         </nav>
 
-        <div className="human-footnote__meta">
+        <div className="footnote__meta">
           <span>Flori Vula / Prishtina</span>
-          <span>Machine portrait 001 / {sourceMaterial.capturedAt}</span>
+          <span>
+            Machine portrait {currentPortrait.id} / {currentPortrait.capturedAt} / an open series
+          </span>
         </div>
       </footer>
     </main>

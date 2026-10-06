@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400&display=swap" />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      html, body { width: 1200px; height: 630px; overflow: hidden; background: #0a0a0a; color: #e6e7e8; }
+      body { font-family: 'Satoshi', sans-serif; padding: 44px 60px; display: grid; grid-template-rows: auto 1fr auto; -webkit-font-smoothing: antialiased; }
+      .mono { font: 400 13px/1 'JetBrains Mono', monospace; letter-spacing: .2em; text-transform: uppercase; color: #7a8087; }
+      header { display: flex; justify-content: space-between; padding-bottom: 20px; border-bottom: 1px solid rgba(230,231,232,.14); }
+      header b { font-weight: 400; color: #e6e7e8; }
+      h1 { align-self: center; display: flex; flex-direction: column; font-weight: 300; font-size: 96px; line-height: .95; letter-spacing: -.045em; }
+      h1 em { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: .9em; letter-spacing: -.02em; color: #8fb4d8; margin-left: .05em; }
+      .plot { position: relative; height: 92px; border-bottom: 1px solid rgba(230,231,232,.14); }
+      svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+      footer { display: flex; justify-content: space-between; padding-top: 16px; }
+      .accent { color: #8fb4d8; }
+    </style>
+  </head>
+  <body>
+    <header class="mono"><span>Machine portrait 002</span><b>Flori Vula</b><span>Captured 06 Oct 2026</span></header>
+    <h1><span>Flori Vula,</span><em>according to</em><span>the machines</span></h1>
+    <div>
+      <div class="plot"><svg id="plot" preserveAspectRatio="none"></svg></div>
+      <footer class="mono"><span>The record / 622 changes / 95 days</span><span class="accent">R / 001 &nbsp; R / 002</span></footer>
+    </div>
+    <script>
+      // Injected by generate-og.mjs from src/content/record.ts.
+      const days = __CHANGES_PER_DAY__
+      const svg = document.getElementById('plot')
+      const W = days.length * 10, H = 92, peak = Math.max(...days), total = days.reduce((a, b) => a + b, 0)
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`)
+      let run = 0, pts = [], out = ''
+      days.forEach((c, i) => {
+        const x = i * 10 + 5, h = c ? 3 + (c / peak) * H * 0.6 : 2
+        out += `<line x1="${x}" x2="${x}" y1="${H}" y2="${H - h}" stroke="${c ? 'rgba(230,231,232,.5)' : '#5c6167'}" stroke-width="2" vector-effect="non-scaling-stroke"/>`
+        run += c; pts.push(`${x},${H - (run / total) * (H - 4)}`)
+      })
+      for (const d of [21, 94]) out += `<line x1="${d * 10 + 5}" x2="${d * 10 + 5}" y1="0" y2="${H}" stroke="rgba(230,231,232,.3)" stroke-dasharray="3 4" vector-effect="non-scaling-stroke"/>`
+      out += `<polyline points="${pts.join(' ')}" fill="none" stroke="#8fb4d8" stroke-width="2" vector-effect="non-scaling-stroke"/>`
+      svg.innerHTML = out
+      document.documentElement.dataset.ready = '1'
+    </script>
+  </body>
+</html>

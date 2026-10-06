@@ -1,9 +1,14 @@
 import { useEffect } from 'react'
 
+/**
+ * Fades `.reveal` elements in as they enter the viewport. Runs after every
+ * render so content that mounts later (an opened archive) is picked up too;
+ * anything already shown is skipped.
+ */
 export function useReveal() {
   useEffect(() => {
     const elements = Array.from(
-      document.querySelectorAll<HTMLElement>('.reveal'),
+      document.querySelectorAll<HTMLElement>('.reveal:not(.is-visible)'),
     )
 
     if (
@@ -23,7 +28,7 @@ export function useReveal() {
           }
         })
       },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.08 },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.06 },
     )
 
     elements.forEach((element) => observer.observe(element))
@@ -31,4 +36,3 @@ export function useReveal() {
     return () => observer.disconnect()
   })
 }
-

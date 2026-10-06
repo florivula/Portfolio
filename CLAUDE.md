@@ -4,75 +4,72 @@ Context for AI sessions working on this repository.
 
 ## What this is
 
-**Machine Portrait 001** — Flori Vula's personal surface. A static, dated artifact:
-*"Flori Vula, according to the machines"*, a portrait assembled from the AI systems he
-works with. It replaces the previous Next.js developer portfolio (preserved on the
-`portfolio-v1` branch). It carries the single Instagram-bio link and is meant to be
-shareable on LinkedIn.
+**Machine Portraits** — Flori Vula's personal surface: *"Flori Vula, according to the
+machines"*, a portrait written by the AI systems he works with, **retaken over time**.
+Reading 001 (Claude Opus 5, 25 Jul 2026) and reading 002 (Claude Opus 5.5, 6 Oct 2026),
+both from inside Airise's private company repository. It carries the Instagram-bio link
+and is meant to be shareable on LinkedIn. The previous Next.js portfolio is on
+`portfolio-v1`.
 
-Deliberately: no CMS, no database, no runtime model call, no ongoing maintenance. A
-portrait captured at one moment, so it becomes an artifact rather than going stale.
+Deliberately: no CMS, no database, no runtime model call. Each reading is a dated capture;
+the series is how the page stays current without going stale.
+
+**Why a series (the 6 Oct 2026 rebuild).** Asked to "re-do it because some time has
+passed", the honest move was a new capture, not a rewrite of the old one: 001's premise
+is that it is exactly what a machine said, so it cannot be updated, only joined. The page
+now leads with the newest reading and keeps every earlier one whole below it. The
+distance between readings is part of the exhibit, which is what section 03 (the record,
+measured at each capture) and the cover instrument (the record's daily changes, both
+captures flagged) show.
 
 ## Stack
 
 Vite + React + TypeScript, static output to `dist/`. Node `22.13.1`. Deployed on Vercel;
-`main` is production (florivula.com, proxied through Cloudflare), other branches get
-preview deployments. `vercel.json` pins the Vite build explicitly.
+`main` is production (www.florivula.com; the apex 307s to www, proxied through Cloudflare),
+other branches get preview deployments. `vercel.json` runs the publish guard before the
+build.
 
 ## The content rule — read before touching content
 
-The exact prompt and response are the central artifact.
+- **Never invent, complete, paraphrase, or "improve" a prompt or response.** Each lives in
+  `src/content/portrait-NNN.ts`. The prompt keeps its casing and typos.
+- **Earlier readings are never edited.** 001's strings are byte-for-byte what was published
+  on 25 Jul; only its wrapper changed in the series refactor.
+- Layout lives apart from the source: `src/content/reading.ts` holds the series order and
+  each reading's `hinge` / `quote` roles. Roles change typography only; every paragraph
+  renders, in order. The content gate fails if a role index lands on a long paragraph.
+- `src/content/record.ts` holds **counts only** from the private record (commits per day,
+  files and words at each capture). Nothing from inside it is ever published here.
+- Each reading's `Editing` condition ("None. Returned text, unchanged.") depends on the
+  response being unedited. The "Nothing was softened" note belongs to 001 and sits with it.
+- 002 was written knowing it would be published, by a model that had read 001 and the
+  brain. It names no clients, people or revenue, and nothing internal-only. Keep any future
+  reading to the same standard: this repository and site are public.
 
-**The capture (25 July 2026).** The source is a real exchange: Flori's prompt, answered by
-**Claude Opus 5 running as Claude Code inside Airise's private company repository**, reading
-the internal files it had access to. That provenance is stated on the page in the source
-conditions strip, and it is the reason the page works. A chatbot handed a bio would be a
-weaker exhibit than the machine that does the work describing its operator.
-
-- **Never invent, complete, paraphrase, or "improve" the strings.** The page's premise is
-  that this is exactly what a machine said. Writing that content for the layout destroys
-  the only thing the page is.
-- **The prompt keeps its original casing and typos.** It is the exhibit, not a caption.
-- Exact strings live in `src/content/source.ts`. Layout annotations live separately in
-  `src/content/reading.ts` so the source is never edited to fit a design. Dropping a
-  paragraph from the designed view or promoting one to a pull quote is a layout decision;
-  the raw response mode always shows every paragraph in order.
-- Redactions must stay visibly marked rather than silently applied.
-- `Codex's second read` is a distinct authorship claim. Do not write those annotations as
-  another model. `secondReadNotes` is empty for that reason, and the tab hides itself until
-  it is not.
-- **Two claims on the page depend on the response being unedited:** the `Editing` condition
-  ("None. Returned text, unchanged.") and section 03 ("Nothing was softened."). Edit the
-  response and both have to change or come out.
-
-`scripts/content-gate.mjs` defines "the portrait has a real source" — verified status plus a real,
-non-empty prompt and response. The designed reading no longer needs a section map: it loops over every
-response paragraph in source order, so completeness is structural. The gate backs both `npm run content:check` and
-`scripts/guard-publish.mjs`, which fails **production** builds while the gate is red so an
-empty portrait cannot reach the live domain. Previews still build. Missing Codex notes are
-reported as a non-blocking note, not a failure: they make the page incomplete, not empty.
-
-The guard is wired into `vercel.json` again as of the 26 Jul desktop audit:
-`"buildCommand": "node scripts/guard-publish.mjs && npm run build"`.
+`scripts/content-gate.mjs` defines "every reading has a real source". It backs
+`npm run content:check` and `scripts/guard-publish.mjs`, which fails **production** builds
+while the gate is red. Previews still build.
 
 ## Commands
 
 ```powershell
 npm install
 npm run dev        # vite, 127.0.0.1:5173
-npm run lint
-npm run typecheck
-npm run build
-npm run verify     # content gate + lint + typecheck + build
-npm run og:generate
+npm run verify     # content gate + gate tests + lint + typecheck + build
+npm run og:generate  # renders scripts/og.html to public/og-image.png via headless Chrome
 ```
+
+## Design
+
+The Airise register on a personal subject: near-black `#0A0A0A`, off-white `#E6E7E8`, one
+steel-blue accent `#8FB4D8`, hairlines; Satoshi for reading, JetBrains Mono for anything
+measured, exactly one Instrument Serif italic moment (the title's "according to"). No
+rounded corners, gradients, chat bubbles, fake terminals, emoji or typewriter effects.
+External copy avoids em dashes. The Airise lockup does not appear; this is Flori's page.
 
 ## Conventions
 
-- Frontend-only static site. No backend, auth, or analytics.
-- Keep private/company-internal material out of source, bundles, metadata, and comments —
-  this repository is public.
-- Do not add a contact form, newsletter, availability badge, or "hire me" pitch.
-- Visual register: editorial research dossier crossed with a small museum exhibit. No AI
-  gradients, chat bubbles, fake terminals, emoji, skill bars, or typewriter effects.
+- Frontend-only static site. No backend, auth, analytics, contact form, newsletter or
+  "hire me" pitch.
+- Keep private/company-internal material out of source, bundles, metadata and comments.
 - Verify externally linked URLs before changing them.

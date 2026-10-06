@@ -16,3 +16,12 @@ test('returns null for a missing or unterminated field', () => {
   assert.equal(extractTemplateLiteral('rawResponse: `unfinished', 'rawResponse'), null)
   assert.equal(extractTemplateLiteral('other: `value`', 'rawResponse'), null)
 })
+
+test('splits paragraphs on blank lines only', async () => {
+  const { splitParagraphs } = await import('./content-gate.mjs')
+  assert.deepEqual(splitParagraphs('one\nstill one\n\ntwo\r\n\r\nthree'), [
+    'one\nstill one',
+    'two',
+    'three',
+  ])
+})

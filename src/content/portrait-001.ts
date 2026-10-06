@@ -1,4 +1,4 @@
-import type { SourceMaterial } from './types'
+import type { Portrait } from './types'
 
 /**
  * Source integrity rule:
@@ -13,10 +13,16 @@ import type { SourceMaterial } from './types'
  * Airise's private company repository on 25 July 2026, answering Flori's
  * prompt from the internal files it had access to. Layout annotations live in
  * `reading.ts` so the source below is never edited to fit a design.
+ *
+ * Archived 6 October 2026 when Machine Portrait 002 was captured. Only this
+ * wrapper changed (the type name, `id`, `capturedOn`); both strings are
+ * byte-for-byte what was published on 25 July.
  */
-export const sourceMaterial: SourceMaterial = {
+export const portrait001: Portrait = {
+  id: '001',
   status: 'verified-exact-source',
   capturedAt: '25 July 2026',
+  capturedOn: '2026-07-25',
   model: 'Claude Opus 5',
   conditions: [
     { key: 'Model', value: 'Claude Opus 5 (Anthropic)' },
